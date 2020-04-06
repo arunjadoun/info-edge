@@ -29,7 +29,16 @@ public class Test implements Serializable {
   @Column(name = "status")
   private String status;
 
+  public long getEndTime() {
+    return endTime;
+  }
 
+  public void setEndTime(long endTime) {
+    this.endTime = endTime;
+  }
+
+  @Column(name = "end_time")
+  private long endTime;
 
   @Column(name = "hospital_id")
   private Integer hospitalId;
