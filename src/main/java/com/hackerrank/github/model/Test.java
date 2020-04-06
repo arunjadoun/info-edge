@@ -25,6 +25,12 @@ public class Test implements Serializable {
   @Column(name = "lab_id")
   private Integer labId;
 
+
+  @Column(name = "status")
+  private String status;
+
+
+
   @Column(name = "hospital_id")
   private Integer hospitalId;
 
@@ -51,6 +57,18 @@ public class Test implements Serializable {
 
   public Integer getLabId() {
     return labId;
+  }
+
+
+
+  public String getStatus() {
+    return status;
+  }
+
+
+
+  public void setStatus(String status) {
+    this.status = status;
   }
 
 

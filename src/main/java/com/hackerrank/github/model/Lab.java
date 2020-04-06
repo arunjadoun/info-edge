@@ -1,8 +1,19 @@
 package com.hackerrank.github.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the city_state database table.
@@ -29,9 +40,31 @@ public class Lab implements Serializable {
 
   @Column(name = "longitude")
   private Long longitude;
+  
+  @OneToMany(mappedBy = "labId", fetch = FetchType.LAZY)
+  private List<Test> test;
+
+  public List<Test> getTest() {
+    return test;
+  }
+
+
+
+  public void setTest(List<Test> test) {
+    this.test = test;
+  }
+
+
 
   @Column(name = "max_capacity")
   private int maxCapacity;
+  
+  
+  
+
+  @Column(name = "active_test")
+  private int activeTest;
+
 
 
   @Temporal(TemporalType.TIMESTAMP)
@@ -95,6 +128,20 @@ public class Lab implements Serializable {
 
   public void setMaxCapacity(int maxCapacity) {
     this.maxCapacity = maxCapacity;
+  }
+
+  
+  
+
+
+  public int getActiveTest() {
+    return activeTest;
+  }
+
+
+
+  public void setActiveTest(int activeTest) {
+    this.activeTest = activeTest;
   }
 
 
