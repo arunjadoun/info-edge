@@ -47,7 +47,7 @@ public class TestProcessor {
 
     testDao.save(t);
 
-    Test t2 = testDao.findByStatusByCredated(t.getLabId(), "WAITING");
+    Test t2 = testDao.getByLabIdAndStatus(t.getLabId(), "WAITING");
     if (t2 != null) {
       t2.setStatus("RUNNING");
       testDao.save(t2);
@@ -77,7 +77,7 @@ public class TestProcessor {
     } else {
       int max = lab.get().getMaxCapacity();
       int active = lab.get().getActiveTest();
-      Test t2 = testDao.getByLabStatus(labId);
+      Test t2 = testDao.getById(labId);
       if (max > active) {
         t.setStatus("RUNNING");
         t.setEndTime(System.currentTimeMillis()+18000000);
