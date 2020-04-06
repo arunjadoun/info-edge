@@ -48,6 +48,7 @@ CREATE TABLE `lab_hospital` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `lab_id` int(11) NOT NULL,
   `hospital_id` int(11) NOT NULL,
+  `time` decimal(11,7) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -62,5 +63,22 @@ CREATE TABLE `test` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
   );
 
+
+insert into lab values (1, 'l1', 90, 90, 1, 0, now());
+insert into lab values (2, 'l', 90, 90, 1, 0, now());
+
+insert into hospital values (1, 'h1', 90, 90, now());
+insert into hospital values (2, 'h2', 90, 90, now());
+
+insert into lab_hospital values (1, 1, 1, 10);
+insert into lab_hospital values (3, 2, 1, 10);
+insert into lab_hospital values (2, 2, 2, 10);
+insert into lab_hospital values (4, 1, 2, 10);
+
+insert into test values (1, 1, 1, 1000, 'RUNNING', 'IN_PROGRESS', now());
+insert into test values (2, 2, 2, 1000, 'RUNNING', 'IN_PROGRESS', now());
+
+insert into test values (3, 1, 1, 2000, 'RUNNING', 'IN_PROGRESS', now());
+insert into test values (4, 2, 2, 2000, 'RUNNING', 'IN_PROGRESS', now());
 
 

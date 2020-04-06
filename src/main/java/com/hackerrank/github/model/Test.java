@@ -125,6 +125,11 @@ public class Test implements Serializable, Comparable {
 
   @Override
   public int compareTo(Object o) {
-    return ((int) (this.endTime - Long.valueOf(String.valueOf(o))));
+    if(this.endTime > ((Test) o).getEndTime() )
+      return 1;
+    else if(this.endTime < ((Test) o).getEndTime() )
+            return -1;
+    else
+      return 0;
   }
 }

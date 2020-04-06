@@ -10,6 +10,7 @@ import com.infoedge.dao.TestDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,11 +27,15 @@ public class Covid19Service {
     @Autowired
     private TestDao testDao;
 
-    public Lab getNearByLab(Long hospitalId){
-        List<Integer> labList = labHospitalDao.getLabsByHospitalId(hospitalId);
-        List<Test> testList = labList.stream().map(integer -> testDao.getByLabId(integer)).collect(Collectors.toList());
-        Collections.sort(testList);
-        return labDao.findById(testList.get(0).getLabId()).get();
+    public Lab getNearByLab(Integer hospitalId){
+        List<LabHospital> labHospitals = labHospitalDao.getLabsByHospitalId(hospitalId);
+        List<Test> tests = new ArrayList<>();
+        for(LabHospital labHospital : labHospitals){
+            List<Test> testList = testDao.getByLabId(labHospital.getLabId());
+            tests.add(testList.get(testList.size()-1));
+        }
+        Collections.sort(tests);
+        return labDao.findById(tests.get(0).getLabId()).get();
     }
 
 }
