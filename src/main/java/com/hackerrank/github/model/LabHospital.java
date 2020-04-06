@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "lab", catalog = "test")
+@Table(name = "lab_hospital", catalog = "test")
 public class LabHospital {
 
 
@@ -19,6 +19,7 @@ public class LabHospital {
   @Column(name = "lab_id")
   private Integer labId;
 
+  
   @Column(name = "hospital_id")
   private Integer hospitalId;
 
