@@ -10,7 +10,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "test", catalog = "test")
-public class Test implements Serializable {
+public class Test implements Serializable, Comparable {
 
   /**
    * 
@@ -123,5 +123,8 @@ public class Test implements Serializable {
   }
 
 
-
+  @Override
+  public int compareTo(Object o) {
+    return ((int) (this.endTime - Long.valueOf(String.valueOf(o))));
+  }
 }
