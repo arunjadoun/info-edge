@@ -7,7 +7,7 @@ public class EventDTO {
     private Long id;
     private String type;
     private ActorDTO actor;
-    private RepoDTO repo;
+    private LabDTO repo;
 
     public Timestamp getCreatedAt() {
         return createdAt;
@@ -35,11 +35,11 @@ public class EventDTO {
         this.actor = actor;
     }
 
-    public RepoDTO getRepo() {
+    public LabDTO getRepo() {
         return repo;
     }
 
-    public void setRepo(RepoDTO repo) {
+    public void setRepo(LabDTO repo) {
         this.repo = repo;
     }
 }
