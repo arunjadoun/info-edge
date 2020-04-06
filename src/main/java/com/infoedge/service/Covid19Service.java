@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.infoedge.dao.LabDao;
 import com.infoedge.dao.LabHospitalDao;
@@ -35,7 +36,8 @@ public class Covid19Service {
         List<LabHospital> labHospitals = labHospitalDao.getLabsByHospitalId(hospitalId);
         List<Test> tests = new ArrayList<>();
         for(LabHospital labHospital : labHospitals){
-            List<Test> testList = testDao.getByLabId(labHospital.getLabId());
+            List<Test> testList = testDao.getByLabIdAndHospitalId(labHospital.getLabId(), hospitalId);
+            if(!CollectionUtils.isEmpty(testList))
             tests.add(testList.get(testList.size()-1));
         }
         Collections.sort(tests);

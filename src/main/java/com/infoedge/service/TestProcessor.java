@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import com.infoedge.constant.TestStatus;
 import com.infoedge.dao.LabDao;
 import com.infoedge.dao.LabHospitalDao;
 import com.infoedge.dao.TestDao;
+import com.infoedge.listner.TaskListner;
 import com.infoedge.model.Lab;
 import com.infoedge.model.LabHospital;
 import com.infoedge.model.Test;
@@ -39,19 +41,10 @@ public class TestProcessor {
 
   private PriorityBlockingQueue<Test> queue = new PriorityBlockingQueue<>();
 
+  @PostConstruct
   public void taskProcessor() {
-
-
-    while (true) {
-      Test test = queue.peek();
-      if (test.getEndTime() > System.currentTimeMillis()) {
-        queue.poll();
-        notify(test);
-      }
-    }
-
-
-
+    TaskListner taskListner = new TaskListner(queue, this);
+    taskListner.run();
   }
 
   @Transactional
