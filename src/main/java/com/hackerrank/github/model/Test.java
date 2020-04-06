@@ -9,7 +9,7 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name = "test", catalog = "test")
+@Table(name = "test")
 public class Test implements Serializable, Comparable {
 
   /**

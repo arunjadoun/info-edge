@@ -18,6 +18,11 @@
 --insert into EVENT values (4121551916, now(), 'PushEvent', 279031, 806);
 --
 
+DROP TABLE IF EXISTS lab;
+DROP TABLE IF EXISTS hospital;
+DROP TABLE IF EXISTS lab_hospital;
+DROP TABLE IF EXISTS test;
+
 CREATE TABLE `lab` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(256) not NULL,
@@ -26,9 +31,7 @@ CREATE TABLE `lab` (
   `max_capacity` int(11) NOT NULL default 0,
   `active_test` int(11) default 0,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-  
-  PRIMARY KEY (`id`)
+PRIMARY KEY (`id`)
 );
 
 
@@ -38,17 +41,13 @@ CREATE TABLE `hospital` (
   `latitude` decimal(11,7) NOT NULL,
   `longitude` decimal(11,7) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-  
-  PRIMARY KEY (`id`)
+PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `lab_hospital` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `lab_id` int(11) NOT NULL,
   `hospital_id` int(11) NOT NULL,
-
-  
   PRIMARY KEY (`id`)
 );
 
@@ -57,10 +56,11 @@ CREATE TABLE `test` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `lab_id` int(11) NOT NULL,
   `hospital_id` int(11) NOT NULL,
+  `end_time` int(11) NOT NULL,
    `status` varchar(256) default NULL,
    `result` varchar(256) default NULL,
-
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  );
 
 
 

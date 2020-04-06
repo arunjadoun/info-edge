@@ -9,7 +9,7 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name = "hospital", catalog = "test")
+@Table(name = "hospital")
 public class Hospital implements Serializable {
 
   /**

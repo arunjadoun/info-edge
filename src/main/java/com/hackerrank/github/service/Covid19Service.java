@@ -27,7 +27,7 @@ public class Covid19Service {
     private TestDao testDao;
 
     public Lab getNearByLab(Long hospitalId){
-        List<Integer> labList = labHospitalDao.getLabsByHospital(hospitalId);
+        List<Integer> labList = labHospitalDao.getLabsByHospitalId(hospitalId);
         List<Test> testList = labList.stream().map(integer -> testDao.getByLabId(integer)).collect(Collectors.toList());
         Collections.sort(testList);
         return labDao.findById(testList.get(0).getLabId()).get();
