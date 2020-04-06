@@ -78,6 +78,10 @@ public class TestProcessor {
       int max = lab.get().getMaxCapacity();
       int active = lab.get().getActiveTest();
       Test t2 = testDao.getByLabStatus(labId);
+      
+      if(max*10 < active) {
+        throw new Exception();
+      }
       if (max > active) {
         t.setStatus("RUNNING");
         t.setEndTime(System.currentTimeMillis()+18000000);
