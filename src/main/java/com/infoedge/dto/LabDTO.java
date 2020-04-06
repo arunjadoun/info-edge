@@ -1,4 +1,4 @@
-package com.hackerrank.github.dto;
+package com.infoedge.dto;
 
 import java.util.PriorityQueue;
 

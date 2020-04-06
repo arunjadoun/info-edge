@@ -1,27 +1,16 @@
-package com.hackerrank.github.model;
+package com.infoedge.model;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the city_state database table.
  * 
  */
 @Entity
-@Table(name = "lab")
-public class Lab implements Serializable {
+@Table(name = "hospital")
+public class Hospital implements Serializable {
 
   /**
    * 
@@ -40,18 +29,6 @@ public class Lab implements Serializable {
 
   @Column(name = "longitude")
   private Double longitude;
-  
-
-
-
-  @Column(name = "max_capacity")
-  private int maxCapacity;
-  
-  
-  
-
-  @Column(name = "active_test")
-  private int activeTest;
 
 
 
@@ -108,32 +85,6 @@ public class Lab implements Serializable {
 
 
 
-  public int getMaxCapacity() {
-    return maxCapacity;
-  }
-
-
-
-  public void setMaxCapacity(int maxCapacity) {
-    this.maxCapacity = maxCapacity;
-  }
-
-  
-  
-
-
-  public int getActiveTest() {
-    return activeTest;
-  }
-
-
-
-  public void setActiveTest(int activeTest) {
-    this.activeTest = activeTest;
-  }
-
-
-
   public Date getCreated() {
     return created;
   }
@@ -144,6 +95,8 @@ public class Lab implements Serializable {
     this.created = created;
   }
 
+  
+  
 
 
 }

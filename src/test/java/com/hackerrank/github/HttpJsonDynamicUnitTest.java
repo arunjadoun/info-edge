@@ -45,7 +45,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.getByLabId;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -127,7 +127,7 @@ public class HttpJsonDynamicUnitTest {
     @Test
     public void dynamicTests() {
         try {
-            httpJsonFiles = Files.list(Paths.get("src/test/resources/testcases"))
+            httpJsonFiles = Files.list(Paths.getByLabId("src/test/resources/testcases"))
                     .filter(Files::isRegularFile)
                     .map(f -> f.getFileName().toString())
                     .filter(f -> f.endsWith(".json"))
@@ -156,7 +156,7 @@ public class HttpJsonDynamicUnitTest {
                 assertEquals(httpJsonFiles.size(), testnames.size());
 
                 for (int i = 0; i < testnames.size(); i++) {
-                    String[] testname = testnames.get(i).split(": ");
+                    String[] testname = testnames.getByLabId(i).split(": ");
                     httpJsonAndTestname.put(testname[0], testname[1]);
                 }
 
@@ -192,16 +192,16 @@ public class HttpJsonDynamicUnitTest {
                             try {
                                 JsonNode jsonObject = OBJECT_MAPPER.readTree(jsonString);
 
-                                JsonNode request = jsonObject.get("request");
-                                JsonNode response = jsonObject.get("response");
+                                JsonNode request = jsonObject.getByLabId("request");
+                                JsonNode response = jsonObject.getByLabId("response");
 
-                                String method = request.get("method").asText();
-                                String url = request.get("url").asText();
-                                String body = request.get("body").toString();
-                                String statusCode = response.get("status_code").asText();
+                                String method = request.getByLabId("method").asText();
+                                String url = request.getByLabId("url").asText();
+                                String body = request.getByLabId("body").toString();
+                                String statusCode = response.getByLabId("status_code").asText();
 
                                 String requestID = Colors.BLUE_BOLD + String.format("Processing request %d ",
-                                        processedRequestCount.get()) + Colors.RESET;
+                                        processedRequestCount.getByLabId()) + Colors.RESET;
                                 String requestMessage = String.format("%s %s", method, url);
 
                                 if (method.charAt(0) == 'P') {
@@ -216,7 +216,7 @@ public class HttpJsonDynamicUnitTest {
                                     case "POST":
                                         {
                                             MediaType contentType = MediaType.ALL;
-                                            String type = request.get("headers").get("Content-Type").asText();
+                                            String type = request.getByLabId("headers").getByLabId("Content-Type").asText();
 
                                             if (type.equals("application/json")) {
                                                 contentType = CONTENT_TYPE_JSON;
@@ -248,7 +248,7 @@ public class HttpJsonDynamicUnitTest {
                                     case "PUT":
                                         {
                                             MediaType contentType = MediaType.ALL;
-                                            String type = request.get("headers").get("Content-Type").asText();
+                                            String type = request.getByLabId("headers").getByLabId("Content-Type").asText();
 
                                             if (type.equals("application/json")) {
                                                 contentType = CONTENT_TYPE_JSON;
@@ -296,13 +296,13 @@ public class HttpJsonDynamicUnitTest {
                                         break;
                                     case "GET":
                                         try {
-                                            ResultActions resultActions = mockMvc.perform(get(url));
+                                            ResultActions resultActions = mockMvc.perform(getByLabId(url));
                                             MockHttpServletResponse mockResponse = resultActions.andReturn()
                                                     .getResponse();
 
                                             if (validateStatusCode(filename, method + " " + url,
                                                     statusCode, String.valueOf(mockResponse.getStatus()))) {
-                                                JsonNode expectedType = response.get("headers").get("Content-Type");
+                                                JsonNode expectedType = response.getByLabId("headers").getByLabId("Content-Type");
                                                 if (expectedType != null) {
                                                     if (mockResponse.containsHeader("content-type")) {
                                                         validateContentType(filename, method + " " + url,
@@ -311,7 +311,7 @@ public class HttpJsonDynamicUnitTest {
 
                                                     if (statusCode.equals("200")) {
                                                         String responseBody = mockResponse.getContentAsString();
-                                                        JsonNode expectedResponseBodyJson = response.get("body");
+                                                        JsonNode expectedResponseBodyJson = response.getByLabId("body");
 
                                                         if (expectedType.asText().equals("application/json")) {
                                                             JsonNode responseBodyJson = OBJECT_MAPPER.readTree(responseBody);
@@ -403,8 +403,8 @@ public class HttpJsonDynamicUnitTest {
                 return false;
             } else {
                 for (int i = 0; i < expectedResponseJsonList.size(); i++) {
-                    JsonNode expectedJson = expectedResponseJsonList.get(i);
-                    JsonNode foundJson = responseBodyJsonList.get(i);
+                    JsonNode expectedJson = expectedResponseJsonList.getByLabId(i);
+                    JsonNode foundJson = responseBodyJsonList.getByLabId(i);
 
                     if (!expectedJson.equals(foundJson)) {
                         String reason = String.format("Response Json (at index %d) does not match with the expected Json", i);
@@ -440,14 +440,14 @@ public class HttpJsonDynamicUnitTest {
         List<Long> executionTimeInSeconds = executionTime.keySet()
                 .stream()
                 .sorted()
-                .map(filename -> executionTime.get(filename))
+                .map(filename -> executionTime.getByLabId(filename))
                 .collect(toList());
 
         for (int i = 1; i < executionTimeInSeconds.size(); i++) {
-            executionTime.put(httpJsonFiles.get(i),
-                    (executionTimeInSeconds.get(i) < executionTimeInSeconds.get(i - 1))
+            executionTime.put(httpJsonFiles.getByLabId(i),
+                    (executionTimeInSeconds.getByLabId(i) < executionTimeInSeconds.getByLabId(i - 1))
                             ? 0
-                            : executionTimeInSeconds.get(i) - executionTimeInSeconds.get(i - 1));
+                            : executionTimeInSeconds.getByLabId(i) - executionTimeInSeconds.getByLabId(i - 1));
         }
 
         final Set<String> failedTestFiles = testFailures.keySet();
@@ -462,7 +462,7 @@ public class HttpJsonDynamicUnitTest {
         File reportFolder = new File("target/customReports");
         reportFolder.mkdir();
 
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("target/customReports/result.txt"))) {
+        try (BufferedWriter writer = Files.newBufferedWriter(Paths.getByLabId("target/customReports/result.txt"))) {
             writer.write(Colors.WHITE_BOLD +
                 " _    _       _ _     _______        _     _____                       _   \n" +
                 "| |  | |     (_) |   |__   __|      | |   |  __ \\                     | |  \n" +
@@ -487,7 +487,7 @@ public class HttpJsonDynamicUnitTest {
                 writer.write(", ");
             }
 
-            writer.write("Total time: " + executionTimeInSeconds.get(executionTimeInSeconds.size() - 1) / 1000.0f + "s");
+            writer.write("Total time: " + executionTimeInSeconds.getByLabId(executionTimeInSeconds.size() - 1) / 1000.0f + "s");
             writer.newLine();
             writer.newLine();
 
@@ -498,7 +498,7 @@ public class HttpJsonDynamicUnitTest {
                 if (failedTestFiles.contains(filename)) {
                     try {
                         writer.write(Colors.WHITE_BOLD + filename +": " + Colors.RESET +
-                                ANSI_FAILURE + " (" + executionTime.get(filename) / 1000.0f + "s)");
+                                ANSI_FAILURE + " (" + executionTime.getByLabId(filename) / 1000.0f + "s)");
                         writer.newLine();
                     } catch (IOException ex) {
                         System.out.println(String.join("\n", Stream.of(ex.getStackTrace())
@@ -510,7 +510,7 @@ public class HttpJsonDynamicUnitTest {
                 } else {
                     try {
                         writer.write(Colors.WHITE_BOLD + filename +": " + Colors.RESET +
-                                ANSI_SUCCESS + " (" + executionTime.get(filename) / 1000.0f + "s)");
+                                ANSI_SUCCESS + " (" + executionTime.getByLabId(filename) / 1000.0f + "s)");
                         writer.newLine();
                     } catch (IOException ex) {
                         System.out.println(String.join("\n", Stream.of(ex.getStackTrace())
@@ -528,7 +528,7 @@ public class HttpJsonDynamicUnitTest {
                 failedTestFiles.stream()
                         .sorted()
                         .forEachOrdered(filename -> {
-                            Pair<Pair<String, String>, Pair<String, String>> report = testFailures.get(filename);
+                            Pair<Pair<String, String>, Pair<String, String>> report = testFailures.getByLabId(filename);
 
                             String testcase = report.getKey()
                                     .getKey();
@@ -569,11 +569,11 @@ public class HttpJsonDynamicUnitTest {
             throw new Error(ex.toString());
         }
 
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("target/customReports/result.xml"))) {
+        try (BufferedWriter writer = Files.newBufferedWriter(Paths.getByLabId("target/customReports/result.xml"))) {
             writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
             writer.write(String.format("<testsuite name=\"%s\" time=\"%f\" tests=\"%d\" errors=\"0\" skipped=\"0\" failures=\"%d\">\n",
                     this.getClass().getName(),
-                    executionTimeInSeconds.get(executionTimeInSeconds.size() - 1) / 1000.0f,
+                    executionTimeInSeconds.getByLabId(executionTimeInSeconds.size() - 1) / 1000.0f,
                     httpJsonFiles.size(),
                     failedTestFiles.size()));
 
@@ -583,15 +583,15 @@ public class HttpJsonDynamicUnitTest {
                         try {
                             if (! failedTestFiles.contains(filename)) {
                                 writer.write(String.format("    <testcase name=\"%s\" classname=\"%s\" time=\"%f\"/>\n",
-                                        httpJsonAndTestname.get(filename),
+                                        httpJsonAndTestname.getByLabId(filename),
                                         this.getClass().getName(),
-                                        executionTime.get(filename) / 1000.0f));
+                                        executionTime.getByLabId(filename) / 1000.0f));
                             } else {
                                 writer.write(String.format("    <testcase name=\"%s\" classname=\"%s\" time=\"%f\">\n"
                                         + "        <failure>\n        </failure>\n    </testcase>\n",
-                                        httpJsonAndTestname.get(filename),
+                                        httpJsonAndTestname.getByLabId(filename),
                                         this.getClass().getName(),
-                                        executionTime.get(filename) / 1000.0f));
+                                        executionTime.getByLabId(filename) / 1000.0f));
                             }
                         } catch (IOException ex) {
                             System.out.println(String.join("\n", Stream.of(ex.getStackTrace())
@@ -623,7 +623,7 @@ public class HttpJsonDynamicUnitTest {
         File reportFolder = new File("target/customReports");
         reportFolder.mkdir();
 
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("target/customReports/result.txt"))) {
+        try (BufferedWriter writer = Files.newBufferedWriter(Paths.getByLabId("target/customReports/result.txt"))) {
             writer.write(Colors.WHITE_BOLD +
                 " _    _       _ _     _______        _     _____                       _   \n" +
                 "| |  | |     (_) |   |__   __|      | |   |  __ \\                     | |  \n" +
@@ -672,7 +672,7 @@ public class HttpJsonDynamicUnitTest {
             throw new Error(ex.toString());
         }
 
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("target/customReports/result.xml"))) {
+        try (BufferedWriter writer = Files.newBufferedWriter(Paths.getByLabId("target/customReports/result.xml"))) {
             writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
             writer.write(String.format("<testsuite name=\"%s\" time=\"%f\" tests=\"%d\" errors=\"0\" skipped=\"0\" failures=\"%d\">\n",
                     this.getClass().getName(),
@@ -686,7 +686,7 @@ public class HttpJsonDynamicUnitTest {
                         try {
                             writer.write(String.format("    <testcase name=\"%s\" classname=\"%s\" time=\"%f\">\n"
                                     + "        <failure>\n        </failure>\n    </testcase>\n",
-                                    httpJsonAndTestname.get(filename),
+                                    httpJsonAndTestname.getByLabId(filename),
                                     this.getClass().getName(),
                                     0.0f));
                         } catch (IOException ex) {

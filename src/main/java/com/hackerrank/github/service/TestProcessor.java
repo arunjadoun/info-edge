@@ -12,11 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.hackerrank.github.constant.TestStatus;
-import com.hackerrank.github.model.Lab;
-import com.hackerrank.github.model.Test;
+import com.infoedge.constant.TestStatus;
 import com.infoedge.dao.LabDao;
 import com.infoedge.dao.TestDao;
+import com.infoedge.model.Lab;
+import com.infoedge.model.Test;
 
 @Component
 public class TestProcessor {
@@ -28,14 +28,17 @@ public class TestProcessor {
   @Autowired
   private LabDao labDao;
 
-  public void taskProcessor(PriorityBlockingQueue<Test> queue) {
+
+  private PriorityBlockingQueue<Test> queue = new PriorityBlockingQueue<>();
+
+  public void taskProcessor() {
 
 
     while (true) {
       Test test = queue.peek();
       if (test.getEndTime() > System.currentTimeMillis()) {
         queue.poll();
-        notify(test, queue);
+        notify(test);
       }
     }
 
@@ -44,14 +47,15 @@ public class TestProcessor {
   }
 
   @Transactional
-  public void notify(Test test, PriorityBlockingQueue<Test> queue) {
+  public void notify(Test test) {
 
     Test t = testDao.getOne(test.getId());
     t.setStatus(TestStatus.COMPLETED.name());
 
     testDao.save(t);
 
-    Test t2 = testDao.findByStatusByCredated(t.getLabId(), TestStatus.WAITING.name());
+    Test t2 = testDao.getByLabIdAndStatus(t.getLabId(), TestStatus.WAITING.name());
+
     if (t2 != null) {
       t2.setStatus(TestStatus.RUNNING.name());
       testDao.save(t2);
@@ -68,7 +72,7 @@ public class TestProcessor {
   }
 
   @Transactional
-  public void addTest(Integer labId, Integer hospitalId, PriorityBlockingQueue<Test> queue) throws Exception {
+  public void addTest(Integer labId, Integer hospitalId) throws Exception {
 
     Test t = new Test();
     t.setCreated(new Date());
@@ -79,6 +83,7 @@ public class TestProcessor {
     if (!l.isPresent()) {
       throw new Exception();
     } else {
+
       Lab lab = l.get();
       int max = lab.getMaxCapacity();
       int active = lab.getActiveTest();
@@ -86,6 +91,7 @@ public class TestProcessor {
 
 
       if (max * 10 < active) {
+
         throw new Exception();
       }
       if (max > active) {

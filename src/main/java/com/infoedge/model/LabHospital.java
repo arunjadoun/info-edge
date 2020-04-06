@@ -1,4 +1,4 @@
-package com.hackerrank.github.model;
+package com.infoedge.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

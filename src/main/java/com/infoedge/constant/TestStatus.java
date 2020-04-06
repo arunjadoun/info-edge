@@ -1,4 +1,4 @@
-package com.hackerrank.github.constant;
+package com.infoedge.constant;
 
 public enum TestStatus {
   

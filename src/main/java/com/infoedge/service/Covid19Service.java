@@ -1,25 +1,23 @@
-package com.hackerrank.github.service;
-
-import com.hackerrank.github.model.Lab;
-import com.hackerrank.github.model.LabHospital;
-import com.hackerrank.github.model.Test;
-import com.infoedge.dao.HospitalDao;
-import com.infoedge.dao.LabDao;
-import com.infoedge.dao.LabHospitalDao;
-import com.infoedge.dao.TestDao;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+package com.infoedge.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.infoedge.dao.LabDao;
+import com.infoedge.dao.LabHospitalDao;
+import com.infoedge.dao.TestDao;
+import com.infoedge.model.Lab;
+import com.infoedge.model.LabHospital;
+import com.infoedge.model.Test;
 
 @Service
 public class Covid19Service {
 
-    @Autowired
-    private HospitalDao hospitalDao;
+     
     @Autowired
     private LabDao labDao;
     @Autowired

@@ -75,10 +75,10 @@ insert into lab_hospital values (3, 2, 1, 10);
 insert into lab_hospital values (2, 2, 2, 10);
 insert into lab_hospital values (4, 1, 2, 10);
 
-insert into test values (1, 1, 1, 1000, 'RUNNING', 'IN_PROGRESS', now());
-insert into test values (2, 2, 2, 1000, 'RUNNING', 'IN_PROGRESS', now());
+insert into test values (1, 1, 1, 10000, 'RUNNING', 'IN_PROGRESS', now());
+insert into test values (2, 2, 2, 2000, 'RUNNING', 'IN_PROGRESS', now());
 
-insert into test values (3, 1, 1, 2000, 'RUNNING', 'IN_PROGRESS', now());
-insert into test values (4, 2, 2, 2000, 'RUNNING', 'IN_PROGRESS', now());
+insert into test values (3, 1, 1, 3000, 'RUNNING', 'IN_PROGRESS', now());
+insert into test values (4, 2, 2, 4000, 'RUNNING', 'IN_PROGRESS', now());
 
 

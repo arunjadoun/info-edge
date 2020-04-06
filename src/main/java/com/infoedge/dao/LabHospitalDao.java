@@ -1,8 +1,9 @@
 package com.infoedge.dao;
 
-import com.hackerrank.github.model.LabHospital;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
+import com.infoedge.model.LabHospital;
 
 import java.util.List;
 

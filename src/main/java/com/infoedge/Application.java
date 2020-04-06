@@ -1,4 +1,4 @@
-package com.hackerrank.github;
+package com.infoedge;
 
 import java.util.TimeZone;
 import javax.annotation.PostConstruct;

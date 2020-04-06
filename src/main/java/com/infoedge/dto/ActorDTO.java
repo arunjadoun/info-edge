@@ -1,4 +1,4 @@
-package com.hackerrank.github.dto;
+package com.infoedge.dto;
 
 public class ActorDTO {
 
