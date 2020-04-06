@@ -13,17 +13,23 @@ import com.infoedge.dao.TestDao;
 import com.infoedge.model.Lab;
 import com.infoedge.model.LabHospital;
 import com.infoedge.model.Test;
+import com.infoedge.request.AddTestRequest;
 
 @Service
 public class Covid19Service {
 
      
+   
     @Autowired
     private LabDao labDao;
     @Autowired
     private LabHospitalDao labHospitalDao;
     @Autowired
     private TestDao testDao;
+    
+    
+    @Autowired
+    private TestProcessor testProcessor;
 
     public Lab getNearByLab(Integer hospitalId){
         List<LabHospital> labHospitals = labHospitalDao.getLabsByHospitalId(hospitalId);
@@ -34,6 +40,11 @@ public class Covid19Service {
         }
         Collections.sort(tests);
         return labDao.findById(tests.get(0).getLabId()).get();
+    }
+
+    public boolean addTest(AddTestRequest request) throws Exception {
+       boolean isSuccess=  testProcessor.addTest(request.getLabId(), request.getHospitalId());
+      return isSuccess;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.hackerrank.github.service;
+package com.infoedge.service;
 
 import java.util.Date;
 import java.util.List;
@@ -80,7 +80,7 @@ public class TestProcessor {
   }
 
   @Transactional
-  public void addTest(Integer labId, Integer hospitalId) throws Exception {
+  public boolean addTest(Integer labId, Integer hospitalId) throws Exception {
 
     
     LabHospital labHospitals = labHospitalDao.getLabsByHospitalIdAndLabId(hospitalId,labId);
@@ -134,6 +134,7 @@ public class TestProcessor {
           t.setStatus(TestStatus.WAITING.name());
 
           t.setEndTime( t3.getEndTime() - System.currentTimeMillis() + FIVE_HOURS+ labHospitals.getTime());
+          testDao.save(t);
 
           lab.setActiveTest(active + 1);
           labDao.save(lab);
@@ -145,6 +146,7 @@ public class TestProcessor {
 
 
     }
+    return true;
 
 
 
