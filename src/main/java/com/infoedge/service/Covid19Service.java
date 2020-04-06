@@ -13,6 +13,7 @@ import com.infoedge.dao.TestDao;
 import com.infoedge.model.Lab;
 import com.infoedge.model.LabHospital;
 import com.infoedge.model.Test;
+import org.springframework.util.CollectionUtils;
 
 @Service
 public class Covid19Service {
@@ -29,7 +30,8 @@ public class Covid19Service {
         List<LabHospital> labHospitals = labHospitalDao.getLabsByHospitalId(hospitalId);
         List<Test> tests = new ArrayList<>();
         for(LabHospital labHospital : labHospitals){
-            List<Test> testList = testDao.getByLabId(labHospital.getLabId());
+            List<Test> testList = testDao.getByLabIdAndHospitalId(labHospital.getLabId(), hospitalId);
+            if(!CollectionUtils.isEmpty(testList))
             tests.add(testList.get(testList.size()-1));
         }
         Collections.sort(tests);
