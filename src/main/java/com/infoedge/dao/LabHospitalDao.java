@@ -12,6 +12,6 @@ public interface LabHospitalDao   extends JpaRepository<LabHospital, Integer> {
     public List<LabHospital> getLabsByHospitalId(Integer id);
    
     
-    @Query(name = "select lh from LabHospital lh where lh.hospitalId = ?1 and lh.labId = ?2")
-    public LabHospital getLabsByHospitalId(Integer id,Integer labId);
+    @Query(name = "select lh from lab_hospital lh where lh.hospital_id = ?1 and lh.lab_id = ?2",nativeQuery = true)
+    public LabHospital getLabsByHospitalIdAndLabId (Integer id,Integer labId);
 }
