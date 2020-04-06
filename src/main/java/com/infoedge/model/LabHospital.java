@@ -24,7 +24,7 @@ public class LabHospital {
   private Integer hospitalId;
 
   @Column(name = "time")
-  private double time;
+  private long time;
 
   public Integer getId() {
     return id;
@@ -50,11 +50,11 @@ public class LabHospital {
     this.hospitalId = hospitalId;
   }
 
-  public double getTime() {
+  public long getTime() {
     return time;
   }
 
-  public void setTime(double time) {
+  public void setTime(long time) {
     this.time = time;
   }
 

@@ -48,7 +48,7 @@ CREATE TABLE `lab_hospital` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `lab_id` int(11) NOT NULL,
   `hospital_id` int(11) NOT NULL,
-  `time` decimal(11,7) NOT NULL,
+  `time` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
 );
 

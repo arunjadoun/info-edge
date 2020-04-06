@@ -14,8 +14,10 @@ import org.springframework.util.CollectionUtils;
 
 import com.infoedge.constant.TestStatus;
 import com.infoedge.dao.LabDao;
+import com.infoedge.dao.LabHospitalDao;
 import com.infoedge.dao.TestDao;
 import com.infoedge.model.Lab;
+import com.infoedge.model.LabHospital;
 import com.infoedge.model.Test;
 
 @Component
@@ -27,6 +29,11 @@ public class TestProcessor {
 
   @Autowired
   private LabDao labDao;
+  
+  
+  @Autowired
+  private  LabHospitalDao labHospitalDao;
+  
 
 
   private PriorityBlockingQueue<Test> queue = new PriorityBlockingQueue<>();
@@ -74,6 +81,9 @@ public class TestProcessor {
   @Transactional
   public void addTest(Integer labId, Integer hospitalId) throws Exception {
 
+    
+    LabHospital labHospitals = labHospitalDao.getLabsByHospitalId(hospitalId,labId);
+
     Test t = new Test();
     t.setCreated(new Date());
     t.setHospitalId(hospitalId);
@@ -96,7 +106,7 @@ public class TestProcessor {
       }
       if (max > active) {
         t.setStatus(TestStatus.RUNNING.name());
-        t.setEndTime(System.currentTimeMillis() + 18000000);
+        t.setEndTime(System.currentTimeMillis()+labHospitals.getTime() + 18000000+labHospitals.getTime());
         testDao.save(t);
         lab.setActiveTest(active + 1);
         labDao.save(lab);
@@ -122,7 +132,7 @@ public class TestProcessor {
           }
           t.setStatus(TestStatus.WAITING.name());
 
-          t.setEndTime(System.currentTimeMillis() - t3.getEndTime() + 18000000);
+          t.setEndTime( t3.getEndTime() - System.currentTimeMillis() + 18000000+ labHospitals.getTime());
 
           lab.setActiveTest(active + 1);
           labDao.save(lab);
