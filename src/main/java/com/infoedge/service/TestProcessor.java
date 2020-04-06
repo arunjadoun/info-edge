@@ -44,7 +44,8 @@ public class TestProcessor {
   @PostConstruct
   public void taskProcessor() {
     TaskListner taskListner = new TaskListner(queue, this);
-    taskListner.run();
+    Thread t = new Thread(taskListner);
+    t.start();
   }
 
   @Transactional

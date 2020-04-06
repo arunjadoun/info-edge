@@ -28,8 +28,8 @@ public class Covid19Controller {
 
 
 
-  @PostMapping(value = "/addTest")
-  public AddTestRespose fetchAdmin(@RequestBody AddTestRequest request, HttpServletRequest httpServletRequest) throws Exception {
+  @PostMapping("/addTest")
+  public AddTestRespose fetchAdmin(@RequestBody AddTestRequest request, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
 
     AddTestRespose response = new AddTestRespose();
     if (covid19Service.addTest(request)) {
