@@ -24,6 +24,7 @@ import com.infoedge.model.Test;
 public class TestProcessor {
 
 
+  public static final long FIVE_HOURS = 18000000;
   @Autowired
   private TestDao testDao;
 
@@ -106,7 +107,7 @@ public class TestProcessor {
       }
       if (max > active) {
         t.setStatus(TestStatus.RUNNING.name());
-        t.setEndTime(System.currentTimeMillis()+labHospitals.getTime() + 18000000+labHospitals.getTime());
+        t.setEndTime(System.currentTimeMillis()+labHospitals.getTime() + FIVE_HOURS+labHospitals.getTime());
         testDao.save(t);
         lab.setActiveTest(active + 1);
         labDao.save(lab);
@@ -132,7 +133,7 @@ public class TestProcessor {
           }
           t.setStatus(TestStatus.WAITING.name());
 
-          t.setEndTime( t3.getEndTime() - System.currentTimeMillis() + 18000000+ labHospitals.getTime());
+          t.setEndTime( t3.getEndTime() - System.currentTimeMillis() + FIVE_HOURS+ labHospitals.getTime());
 
           lab.setActiveTest(active + 1);
           labDao.save(lab);

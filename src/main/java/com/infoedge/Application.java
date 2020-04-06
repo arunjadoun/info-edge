@@ -9,8 +9,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan({"com.hackerrank"})
-@EntityScan(basePackages = "com.hackerrank")
+@ComponentScan({"com.infoedge"})
+@EntityScan(basePackages = "com.infoedge")
 @EnableJpaRepositories(basePackages = "com.infoedge")
 public class Application {
     public static void main(String[] args) {
