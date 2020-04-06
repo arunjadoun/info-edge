@@ -14,8 +14,7 @@ public interface TestDao extends JpaRepository<Test, Integer>  {
 
 
     
-    @Query(name = "select t from Test t where t.labId = ?1 and t.status ='RUNNING'  order by t.endTime desc limit 1")
-    public Test getByLabStatus(Integer labId);
+
 
     
     @Query(name = "select t from Test t where t.labId = ?1 and t.status =?2 order by t.created asc limit 1")
