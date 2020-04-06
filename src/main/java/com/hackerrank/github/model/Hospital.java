@@ -25,10 +25,10 @@ public class Hospital implements Serializable {
   private String name;
 
   @Column(name = "latitude")
-  private Long latitude;
+  private Double latitude;
 
   @Column(name = "longitude")
-  private Long longitude;
+  private Double longitude;
 
 
 
@@ -61,25 +61,25 @@ public class Hospital implements Serializable {
 
 
 
-  public Long getLatitude() {
+  public Double getLatitude() {
     return latitude;
   }
 
 
 
-  public void setLatitude(Long latitude) {
+  public void setLatitude(Double latitude) {
     this.latitude = latitude;
   }
 
 
 
-  public Long getLongitude() {
+  public Double getLongitude() {
     return longitude;
   }
 
 
 
-  public void setLongitude(Long longitude) {
+  public void setLongitude(Double longitude) {
     this.longitude = longitude;
   }
 
