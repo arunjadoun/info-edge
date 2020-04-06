@@ -6,8 +6,10 @@ import java.util.Optional;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
+import com.hackerrank.github.listner.TaskListner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -39,19 +41,10 @@ public class TestProcessor {
 
   private PriorityBlockingQueue<Test> queue = new PriorityBlockingQueue<>();
 
+  @PostConstruct
   public void taskProcessor() {
-
-
-    while (true) {
-      Test test = queue.peek();
-      if (test.getEndTime() > System.currentTimeMillis()) {
-        queue.poll();
-        notify(test);
-      }
-    }
-
-
-
+    TaskListner taskListner = new TaskListner(queue, this);
+    taskListner.run();
   }
 
   @Transactional
