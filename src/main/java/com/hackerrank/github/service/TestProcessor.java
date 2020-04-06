@@ -83,7 +83,7 @@ public class TestProcessor {
   public void addTest(Integer labId, Integer hospitalId) throws Exception {
 
     
-    LabHospital labHospitals = labHospitalDao.getLabsByHospitalId(hospitalId,labId);
+    LabHospital labHospitals = labHospitalDao.getLabsByHospitalIdAndLabId(hospitalId,labId);
 
     Test t = new Test();
     t.setCreated(new Date());
