@@ -18,32 +18,49 @@
 --insert into EVENT values (4121551916, now(), 'PushEvent', 279031, 806);
 --
 
-CREATE TABLE `REPO` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) NOT NULL,
-  `url` varchar(70) NOT NULL,
+CREATE TABLE `lab` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) not NULL,
+  `latitude` decimal(11,7) NOT NULL,
+  `longitude` decimal(11,7) NOT NULL,
+  `max_capacity` int(11) NOT NULL default 0,
+  `active_test` int(11) default 0,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  
   PRIMARY KEY (`id`)
 );
 
 
-CREATE TABLE `ACTOR` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `login` varchar(256) NOT NULL,
-  `avatar` varchar(70) NOT NULL,
+CREATE TABLE `hospital` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+    `name` varchar(256) not NULL,
+  `latitude` decimal(11,7) NOT NULL,
+  `longitude` decimal(11,7) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `lab_hospital` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `lab_id` int(11) NOT NULL,
+  `hospital_id` int(11) NOT NULL,
+
+  
   PRIMARY KEY (`id`)
 );
 
 
-CREATE TABLE `EVENT` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `type` varchar(256) NOT NULL,
-  `actor_id` bigint(20) NOT NULL,
-  `repo_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`)
-);
+CREATE TABLE `test` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `lab_id` int(11) NOT NULL,
+  `hospital_id` int(11) NOT NULL,
+   `status` varchar(256) default NULL,
+   `result` varchar(256) default NULL,
 
-
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
 
 

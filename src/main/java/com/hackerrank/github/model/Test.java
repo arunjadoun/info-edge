@@ -35,7 +35,7 @@ public class Test implements Serializable {
   private Integer hospitalId;
 
   @Column(name = "result")
-  private int result;
+  private String result;
 
 
   @Temporal(TemporalType.TIMESTAMP)
@@ -91,13 +91,13 @@ public class Test implements Serializable {
 
 
 
-  public int getResult() {
+  public String getResult() {
     return result;
   }
 
 
 
-  public void setResult(int result) {
+  public void setResult(String result) {
     this.result = result;
   }
 

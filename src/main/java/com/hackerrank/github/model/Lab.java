@@ -36,23 +36,11 @@ public class Lab implements Serializable {
   private String name;
 
   @Column(name = "latitude")
-  private Long latitude;
+  private Double latitude;
 
   @Column(name = "longitude")
-  private Long longitude;
+  private Double longitude;
   
-  @OneToMany(mappedBy = "labId", fetch = FetchType.LAZY)
-  private List<Test> test;
-
-  public List<Test> getTest() {
-    return test;
-  }
-
-
-
-  public void setTest(List<Test> test) {
-    this.test = test;
-  }
 
 
 
@@ -96,25 +84,25 @@ public class Lab implements Serializable {
 
 
 
-  public Long getLatitude() {
+  public Double getLatitude() {
     return latitude;
   }
 
 
 
-  public void setLatitude(Long latitude) {
+  public void setLatitude(Double latitude) {
     this.latitude = latitude;
   }
 
 
 
-  public Long getLongitude() {
+  public Double getLongitude() {
     return longitude;
   }
 
 
 
-  public void setLongitude(Long longitude) {
+  public void setLongitude(Double longitude) {
     this.longitude = longitude;
   }
 
